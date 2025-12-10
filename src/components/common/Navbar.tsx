@@ -62,6 +62,14 @@ export default function Navbar() {
           >
             FAQ
           </button>
+          <button
+            onClick={() => navigate("/download")}
+            className={`hover:text-red-600 transition ${
+              isActive("/download") ? "text-red-600 font-semibold" : "text-gray-700"
+            }`}
+          >
+            Download
+          </button>
         </nav>
 
         {/* Right Side Buttons */}
@@ -163,6 +171,19 @@ export default function Navbar() {
               }`}
             >
               FAQ
+            </button>
+            <button
+              onClick={() => {
+                navigate("/download");
+                setMobileMenuOpen(false);
+              }}
+              className={`text-left hover:text-red-600 transition ${
+                isActive("/download")
+                  ? "text-red-600 font-semibold"
+                  : "text-gray-700"
+              }`}
+            >
+              Download
             </button>
             <button
               onClick={() => {

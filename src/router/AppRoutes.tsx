@@ -4,6 +4,7 @@ import Events from "../pages/Events";
 import SingleEvent from "../pages/SingleEvent";
 import Checkout from "../pages/Checkout";
 import PaymentSuccess from "../pages/PaymentSuccess";
+import DownloadApp from "../pages/DownloadApp";
 import Login from "../pages/user/login";
 import Register from "../pages/user/Register";
 import MyTickets from "../pages/user/MyTickets";
@@ -21,6 +22,8 @@ const AppRoutes = () => {
 
         <Route path="/checkout" element={<Checkout />} />
         <Route path="/payment-success" element={<PaymentSuccess />} />
+
+        <Route path="/download" element={<DownloadApp />} />
 
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />

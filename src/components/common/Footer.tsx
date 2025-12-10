@@ -168,7 +168,10 @@ export default function Footer() {
           <div className="mt-8 pt-6 border-t border-slate-700">
             <p className="text-xs text-gray-500 mb-2">Download Our App</p>
             <div className="flex gap-2">
-              <button className="flex items-center gap-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-700/50 border border-slate-600 rounded-lg transition-all text-xs">
+              <button
+                onClick={() => navigate("/download")}
+                className="flex items-center gap-2 px-4 py-2 bg-slate-800/50 hover:bg-slate-700/50 border border-slate-600 rounded-lg transition-all text-xs cursor-pointer"
+              >
                 <span className="text-xl">📱</span>
                 <div className="text-left">
                   <p className="text-[10px] text-gray-500">Get it on</p>
