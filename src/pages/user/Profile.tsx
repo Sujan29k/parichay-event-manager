@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function Profile() {
   const [formData, setFormData] = useState({
-    fullName: "Rupesh Kumar",
+    fullName: "Rupesh Paudel",
     email: "rupesh@example.com",
     phone: "+977 9812345678",
     city: "Kathmandu",
