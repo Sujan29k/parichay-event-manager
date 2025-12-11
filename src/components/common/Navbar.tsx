@@ -1,36 +1,34 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { User, LogOut, Ticket } from "lucide-react";
+import { LogOut, Ticket } from "lucide-react";
+
+interface CurrentUser {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  isFirstLogin?: boolean;
+}
 
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>(null);
   const [showUserMenu, setShowUserMenu] = useState(false);
 
   const isActive = (path: string) => location.pathname === path;
 
-  // Check login status
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("currentUser");
-    
-    if (token && user) {
-      setIsLoggedIn(true);
-      setCurrentUser(JSON.parse(user));
-    } else {
-      setIsLoggedIn(false);
-      setCurrentUser(null);
-    }
-  }, [location]); // Re-check on route change
+  // Derive auth state directly from localStorage on each render
+  // This is intentional as localStorage can change externally (login/logout)
+  const token = localStorage.getItem("token");
+  const userStr = localStorage.getItem("currentUser");
+  const isLoggedIn = !!(token && userStr);
+  const currentUser =
+    token && userStr ? (JSON.parse(userStr) as CurrentUser) : null;
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("currentUser");
-    setIsLoggedIn(false);
-    setCurrentUser(null);
     setShowUserMenu(false);
     navigate("/");
     alert("You have been logged out successfully!");
@@ -93,7 +91,9 @@ export default function Navbar() {
           <button
             onClick={() => navigate("/download")}
             className={`hover:text-red-600 transition ${
-              isActive("/download") ? "text-red-600 font-semibold" : "text-gray-700"
+              isActive("/download")
+                ? "text-red-600 font-semibold"
+                : "text-gray-700"
             }`}
           >
             Download
@@ -126,7 +126,7 @@ export default function Navbar() {
                 <Ticket size={20} />
                 My Tickets
               </button>
-              
+
               {/* User Menu */}
               <div className="relative">
                 <button
@@ -300,9 +300,7 @@ export default function Navbar() {
                   <p className="text-sm font-semibold text-gray-900">
                     {currentUser?.fullName}
                   </p>
-                  <p className="text-xs text-gray-500">
-                    {currentUser?.email}
-                  </p>
+                  <p className="text-xs text-gray-500">{currentUser?.email}</p>
                 </div>
                 <button
                   onClick={() => {

@@ -4,60 +4,73 @@ import { Calendar, MapPin, Ticket, Download, CheckCircle } from "lucide-react";
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 
+interface Booking {
+  bookingId: string;
+  title: string;
+  date: string;
+  location: string;
+  imageUrl?: string;
+  quantity: number;
+  totalAmount: number;
+  paymentMethod: string;
+  walletType?: string;
+  bankName?: string;
+  id: string;
+}
+
 export default function MyTickets() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState<"active" | "past">("active");
-  const [bookings, setBookings] = useState<any[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // Initialize bookings from localStorage
+  const [bookings] = useState<Booking[]>(() => {
+    const token = localStorage.getItem("token");
+    const currentUser = localStorage.getItem("currentUser");
+
+    if (!token || !currentUser) {
+      return [];
+    }
+
+    const user = JSON.parse(currentUser);
+    return JSON.parse(localStorage.getItem(`bookings_${user.id}`) || "[]");
+  });
 
   useEffect(() => {
     // Check if user is logged in
     const token = localStorage.getItem("token");
     const currentUser = localStorage.getItem("currentUser");
-    
+
     if (!token || !currentUser) {
       navigate("/login");
-      return;
     }
-
-    setIsLoggedIn(true);
-    
-    // Load user's bookings from localStorage
-    const user = JSON.parse(currentUser);
-    const userBookings = JSON.parse(localStorage.getItem(`bookings_${user.id}`) || "[]");
-    setBookings(userBookings);
   }, [navigate]);
 
   // Separate active and past tickets based on date
   const now = new Date();
-  const activeTickets = bookings.filter(booking => {
+  const activeTickets = bookings.filter((booking) => {
     const eventDate = new Date(booking.date);
     return eventDate >= now;
   });
 
-  const pastTickets = bookings.filter(booking => {
+  const pastTickets = bookings.filter((booking) => {
     const eventDate = new Date(booking.date);
     return eventDate < now;
   });
 
   const tickets = activeTab === "active" ? activeTickets : pastTickets;
 
-  if (!isLoggedIn) {
-    return null;
-  }
-
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
       <Navbar />
-      
+
       <div className="pt-24 pb-16 px-6">
         <div className="max-w-5xl mx-auto">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">My Tickets</h1>
-            <p className="text-gray-600">
-              View and manage your event tickets
-            </p>
+            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+              My Tickets
+            </h1>
+            <p className="text-gray-600">View and manage your event tickets</p>
           </div>
 
           {/* Tabs */}
@@ -94,8 +107,8 @@ export default function MyTickets() {
                 No {activeTab === "active" ? "Active" : "Past"} Tickets
               </h3>
               <p className="text-gray-600 mb-6">
-                {activeTab === "active" 
-                  ? "You don't have any upcoming events. Start exploring!" 
+                {activeTab === "active"
+                  ? "You don't have any upcoming events. Start exploring!"
                   : "No past events found."}
               </p>
               <button
@@ -115,7 +128,7 @@ export default function MyTickets() {
                   <div className="flex flex-col md:flex-row gap-6">
                     {/* Event Image */}
                     {ticket.imageUrl && (
-                      <div className="md:w-48 h-32 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                      <div className="md:w-48 h-32 rounded-xl overflow-hidden bg-gray-100 shrink-0">
                         <img
                           src={ticket.imageUrl}
                           alt={ticket.title}
@@ -149,25 +162,38 @@ export default function MyTickets() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t">
                         <div>
                           <p className="text-xs text-gray-500">Booking ID</p>
-                          <p className="font-semibold text-sm">{ticket.bookingId}</p>
+                          <p className="font-semibold text-sm">
+                            {ticket.bookingId}
+                          </p>
                         </div>
                         <div>
                           <p className="text-xs text-gray-500">Tickets</p>
-                          <p className="font-semibold text-sm">{ticket.quantity}</p>
+                          <p className="font-semibold text-sm">
+                            {ticket.quantity}
+                          </p>
                         </div>
                         <div>
                           <p className="text-xs text-gray-500">Total Paid</p>
-                          <p className="font-semibold text-sm">₹{ticket.totalAmount?.toFixed(2)}</p>
+                          <p className="font-semibold text-sm">
+                            ₹{ticket.totalAmount?.toFixed(2)}
+                          </p>
                         </div>
                         <div>
                           <p className="text-xs text-gray-500">Payment</p>
                           <p className="font-semibold text-sm">
-                            {(ticket.paymentMethod === "wallet" || ticket.paymentMethod === "upi")
-                              ? (ticket.walletType === "esewa" ? "eSewa" : ticket.walletType === "khalti" ? "Khalti" : "Digital Wallet")
+                            {ticket.paymentMethod === "wallet" ||
+                            ticket.paymentMethod === "upi"
+                              ? ticket.walletType === "esewa"
+                                ? "eSewa"
+                                : ticket.walletType === "khalti"
+                                ? "Khalti"
+                                : "Digital Wallet"
                               : ticket.paymentMethod === "card"
                               ? "Card"
                               : ticket.paymentMethod === "netbanking"
-                              ? `Net Banking${ticket.bankName ? ` (${ticket.bankName})` : ""}`
+                              ? `Net Banking${
+                                  ticket.bankName ? ` (${ticket.bankName})` : ""
+                                }`
                               : ticket.paymentMethod}
                           </p>
                         </div>
@@ -175,7 +201,9 @@ export default function MyTickets() {
 
                       <div className="flex gap-3 mt-4">
                         <button
-                          onClick={() => alert("Download functionality coming soon!")}
+                          onClick={() =>
+                            alert("Download functionality coming soon!")
+                          }
                           className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm"
                         >
                           <Download size={16} />
@@ -196,7 +224,7 @@ export default function MyTickets() {
           )}
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );
