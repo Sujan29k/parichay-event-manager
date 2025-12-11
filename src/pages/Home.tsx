@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
@@ -6,12 +6,25 @@ import EventCard from "../components/common/EventCard";
 
 export default function Home() {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<any>(null);
+
+  // Check login status
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = localStorage.getItem("currentUser");
+    
+    if (token && user) {
+      setIsLoggedIn(true);
+      setCurrentUser(JSON.parse(user));
+    }
+  }, []);
 
   const featuredEvents = [
     {
       id: 1,
-      title: "Music Concert 2025",
-      date: "Jan 12, 2025",
+      title: "Music Concert 2026",
+      date: "Jan 15, 2026",
       location: "Kathmandu",
       imageUrl:
         "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500",
@@ -19,7 +32,7 @@ export default function Home() {
     {
       id: 2,
       title: "Tech Expo Nepal",
-      date: "Feb 03, 2025",
+      date: "Feb 20, 2026",
       location: "Pokhara",
       imageUrl:
         "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500",
@@ -27,7 +40,7 @@ export default function Home() {
     {
       id: 3,
       title: "Startup Meetup",
-      date: "Mar 18, 2025",
+      date: "Mar 10, 2026",
       location: "Lalitpur",
       imageUrl:
         "https://images.unsplash.com/photo-1511578314322-379afb476865?w=500",
@@ -42,28 +55,56 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative pt-32 pb-20 px-6 bg-gradient-to-br from-red-50 via-white to-red-50">
         <div className="max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
-            Discover & Book
-            <span className="block text-red-600 mt-2">Amazing Events</span>
-          </h2>
-          <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
-            Parichaya Events is your all-in-one platform to discover events,
-            book tickets instantly, and manage your event experience with ease.
-          </p>
-          <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-            <button
-              onClick={() => navigate("/events")}
-              className="px-8 py-4 bg-red-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:bg-red-700 transform hover:scale-105 transition"
-            >
-              Explore Events
-            </button>
-            <button
-              onClick={() => navigate("/register")}
-              className="px-8 py-4 bg-white text-red-600 border-2 border-red-600 text-lg font-semibold rounded-xl shadow hover:bg-red-50 transform hover:scale-105 transition"
-            >
-              Create Account
-            </button>
-          </div>
+          {isLoggedIn && currentUser ? (
+            <>
+              <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                Welcome back,
+                <span className="block text-red-600 mt-2">{currentUser.fullName}! 👋</span>
+              </h2>
+              <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
+                Ready to discover your next amazing experience? Explore trending events, book tickets, and create unforgettable memories!
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => navigate("/events")}
+                  className="px-8 py-4 bg-red-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:bg-red-700 transform hover:scale-105 transition"
+                >
+                  Browse All Events
+                </button>
+                <button
+                  onClick={() => navigate("/my-tickets")}
+                  className="px-8 py-4 bg-white text-red-600 border-2 border-red-600 text-lg font-semibold rounded-xl shadow hover:bg-red-50 transform hover:scale-105 transition"
+                >
+                  My Tickets
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
+                Discover & Book
+                <span className="block text-red-600 mt-2">Amazing Events</span>
+              </h2>
+              <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
+                Parichaya Events is your all-in-one platform to discover events,
+                book tickets instantly, and manage your event experience with ease.
+              </p>
+              <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+                <button
+                  onClick={() => navigate("/events")}
+                  className="px-8 py-4 bg-red-600 text-white text-lg font-semibold rounded-xl shadow-lg hover:bg-red-700 transform hover:scale-105 transition"
+                >
+                  Explore Events
+                </button>
+                <button
+                  onClick={() => navigate("/register")}
+                  className="px-8 py-4 bg-white text-red-600 border-2 border-red-600 text-lg font-semibold rounded-xl shadow hover:bg-red-50 transform hover:scale-105 transition"
+                >
+                  Create Account
+                </button>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Decorative Elements */}

@@ -21,12 +21,46 @@ export default function Register() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add registration logic
+    
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords don't match!");
       return;
     }
-    console.log("Registration attempt:", formData);
+
+    // Store user data in localStorage (frontend-only demo)
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    
+    // Check if email already exists
+    const existingUser = users.find((user: any) => user.email === formData.email);
+    if (existingUser) {
+      alert("Email already registered! Please login instead.");
+      return;
+    }
+
+    // Add new user
+    const newUser = {
+      id: Date.now().toString(),
+      fullName: formData.fullName,
+      email: formData.email,
+      phone: formData.phone,
+      password: formData.password, // In real app, this would be hashed
+      createdAt: new Date().toISOString()
+    };
+
+    users.push(newUser);
+    localStorage.setItem("users", JSON.stringify(users));
+
+    // Auto login after registration
+    localStorage.setItem("token", `demo-token-${newUser.id}`);
+    localStorage.setItem("currentUser", JSON.stringify({
+      id: newUser.id,
+      fullName: newUser.fullName,
+      email: newUser.email,
+      phone: newUser.phone
+    }));
+
+    alert("Account created successfully! Welcome to Parichaya Events!");
+    navigate("/");
   };
 
   return (

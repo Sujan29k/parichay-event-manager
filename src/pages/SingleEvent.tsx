@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Clock, Users, Tag, ArrowLeft } from "lucide-react";
+import { Calendar, MapPin, Clock, Users, Tag, ArrowLeft, Minus, Plus } from "lucide-react";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 
@@ -8,8 +8,8 @@ import Footer from "../components/common/Footer";
 const eventsData = [
   {
     id: 1,
-    title: "Music Concert 2025",
-    date: "Jan 12, 2025",
+    title: "Music Concert 2026",
+    date: "Jan 15, 2026",
     time: "7:00 PM - 11:00 PM",
     location: "Kathmandu Concert Hall, Kathmandu",
     category: "Music",
@@ -30,7 +30,7 @@ const eventsData = [
   {
     id: 2,
     title: "Tech Expo Nepal",
-    date: "Feb 03, 2025",
+    date: "Feb 20, 2026",
     time: "10:00 AM - 6:00 PM",
     location: "Pokhara Convention Center, Pokhara",
     category: "Technology",
@@ -51,7 +51,7 @@ const eventsData = [
   {
     id: 3,
     title: "Startup Meetup",
-    date: "Mar 18, 2025",
+    date: "Mar 10, 2026",
     time: "2:00 PM - 7:00 PM",
     location: "Innovation Hub, Lalitpur",
     category: "Business",
@@ -72,7 +72,7 @@ const eventsData = [
   {
     id: 4,
     title: "Food Festival",
-    date: "Apr 22, 2025",
+    date: "Apr 18, 2026",
     time: "11:00 AM - 9:00 PM",
     location: "Tundikhel Ground, Kathmandu",
     category: "Food",
@@ -92,7 +92,7 @@ const eventsData = [
   {
     id: 5,
     title: "Art Exhibition",
-    date: "May 10, 2025",
+    date: "May 22, 2026",
     time: "9:00 AM - 5:00 PM",
     location: "Patan Museum, Patan",
     category: "Arts",
@@ -112,8 +112,8 @@ const eventsData = [
   },
   {
     id: 6,
-    title: "Marathon 2025",
-    date: "Jun 15, 2025",
+    title: "Marathon 2026",
+    date: "Jun 20, 2026",
     time: "5:00 AM - 12:00 PM",
     location: "Phewa Lake Circuit, Pokhara",
     category: "Sports",
@@ -136,6 +136,7 @@ const eventsData = [
 export default function SingleEvent() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const [ticketQuantity, setTicketQuantity] = useState(1);
 
   const event = eventsData.find((e) => e.id === Number(id));
 
@@ -298,8 +299,57 @@ export default function SingleEvent() {
                   </div>
                 </div>
 
+                {/* Ticket Quantity Selector */}
+                <div className="mb-4">
+                  <label className="text-sm font-semibold text-gray-700 mb-2 block">
+                    Number of Tickets
+                  </label>
+                  <div className="flex items-center justify-between border-2 border-gray-200 rounded-xl p-3">
+                    <button
+                      onClick={() => setTicketQuantity(Math.max(1, ticketQuantity - 1))}
+                      className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                    >
+                      <Minus size={18} />
+                    </button>
+                    <span className="text-2xl font-bold text-gray-900">
+                      {ticketQuantity}
+                    </span>
+                    <button
+                      onClick={() => setTicketQuantity(Math.min(10, ticketQuantity + 1))}
+                      className="w-10 h-10 flex items-center justify-center bg-gray-100 hover:bg-gray-200 rounded-lg transition"
+                    >
+                      <Plus size={18} />
+                    </button>
+                  </div>
+                  <p className="text-xs text-gray-500 mt-1">Maximum 10 tickets per booking</p>
+                </div>
+
                 <button
-                  onClick={() => navigate("/checkout")}
+                  onClick={() => {
+                    // Check if user is logged in
+                    const token = localStorage.getItem("token");
+                    if (!token) {
+                      // Redirect to login with return path
+                      navigate("/login", { state: { from: `/events/${id}` } });
+                      return;
+                    }
+                    
+                    // Extract numeric price from string (e.g., "NPR 1,500" -> 1500)
+                    const priceValue = parseInt(event.price.replace(/[^0-9]/g, ""));
+                    
+                    // Navigate to checkout with event data
+                    navigate("/checkout", {
+                      state: {
+                        id: event.id,
+                        title: event.title,
+                        date: event.date,
+                        location: event.location,
+                        price: priceValue,
+                        quantity: ticketQuantity,
+                        imageUrl: event.imageUrl
+                      }
+                    });
+                  }}
                   className="w-full px-6 py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-bold rounded-xl transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105 mb-4"
                 >
                   Book Now

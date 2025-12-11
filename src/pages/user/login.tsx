@@ -9,8 +9,31 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Add authentication logic
-    console.log("Login attempt:", { email, password });
+    
+    // Get users from localStorage (frontend-only demo)
+    const users = JSON.parse(localStorage.getItem("users") || "[]");
+    
+    // Find user by email and password
+    const user = users.find(
+      (u: any) => u.email === email && u.password === password
+    );
+
+    if (!user) {
+      alert("Invalid email or password! Please try again or register.");
+      return;
+    }
+
+    // Store authentication token
+    localStorage.setItem("token", `demo-token-${user.id}`);
+    localStorage.setItem("currentUser", JSON.stringify({
+      id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      phone: user.phone
+    }));
+
+    alert(`Welcome back, ${user.fullName}!`);
+    navigate("/");
   };
 
   return (

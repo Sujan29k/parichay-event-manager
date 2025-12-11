@@ -9,8 +9,8 @@ export default function Events() {
   const events = [
     {
       id: 1,
-      title: "Music Concert 2025",
-      date: "Jan 12, 2025",
+      title: "Music Concert 2026",
+      date: "Jan 15, 2026",
       location: "Kathmandu",
       category: "Music",
       imageUrl:
@@ -19,7 +19,7 @@ export default function Events() {
     {
       id: 2,
       title: "Tech Expo Nepal",
-      date: "Feb 03, 2025",
+      date: "Feb 20, 2026",
       location: "Pokhara",
       category: "Technology",
       imageUrl:
@@ -28,7 +28,7 @@ export default function Events() {
     {
       id: 3,
       title: "Startup Meetup",
-      date: "Mar 18, 2025",
+      date: "Mar 10, 2026",
       location: "Lalitpur",
       category: "Business",
       imageUrl:
@@ -37,7 +37,7 @@ export default function Events() {
     {
       id: 4,
       title: "Food Festival",
-      date: "Apr 22, 2025",
+      date: "Apr 18, 2026",
       location: "Kathmandu",
       category: "Food",
       imageUrl:
@@ -46,7 +46,7 @@ export default function Events() {
     {
       id: 5,
       title: "Art Exhibition",
-      date: "May 10, 2025",
+      date: "May 22, 2026",
       location: "Patan",
       category: "Arts",
       imageUrl:
@@ -54,8 +54,8 @@ export default function Events() {
     },
     {
       id: 6,
-      title: "Marathon 2025",
-      date: "Jun 15, 2025",
+      title: "Marathon 2026",
+      date: "Jun 20, 2026",
       location: "Pokhara",
       category: "Sports",
       imageUrl:
