@@ -2,9 +2,37 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
+import EventCard from "../components/events/EventCard";
 
 export default function Home() {
   const navigate = useNavigate();
+
+  const featuredEvents = [
+    {
+      id: 1,
+      title: "Music Concert 2025",
+      date: "Jan 12, 2025",
+      location: "Kathmandu",
+      imageUrl:
+        "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500",
+    },
+    {
+      id: 2,
+      title: "Tech Expo Nepal",
+      date: "Feb 03, 2025",
+      location: "Pokhara",
+      imageUrl:
+        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500",
+    },
+    {
+      id: 3,
+      title: "Startup Meetup",
+      date: "Mar 18, 2025",
+      location: "Lalitpur",
+      imageUrl:
+        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=500",
+    },
+  ];
 
   return (
     <div className="bg-gradient-to-b from-white to-gray-50 text-gray-800 min-h-screen">
@@ -146,210 +174,17 @@ export default function Home() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Card 1 */}
-            <div className="bg-white border rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="h-48 bg-gradient-to-br from-red-400 to-pink-500 flex items-center justify-center">
-                <svg
-                  className="w-20 h-20 text-white opacity-50"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"
-                  />
-                </svg>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                  Jan 12, 2025
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 mb-2">
-                  Music Concert 2025
-                </h4>
-                <p className="text-gray-600 mb-4 flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Kathmandu
-                </p>
-                <button
-                  onClick={() => navigate("/events/1")}
-                  className="w-full px-4 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition"
-                >
-                  Book Now
-                </button>
-              </div>
-            </div>
-
-            {/* Card 2 */}
-            <div className="bg-white border rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="h-48 bg-gradient-to-br from-blue-400 to-cyan-500 flex items-center justify-center">
-                <svg
-                  className="w-20 h-20 text-white opacity-50"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                  />
-                </svg>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                  Feb 03, 2025
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 mb-2">
-                  Tech Expo Nepal
-                </h4>
-                <p className="text-gray-600 mb-4 flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Pokhara
-                </p>
-                <button
-                  onClick={() => navigate("/events/2")}
-                  className="w-full px-4 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition"
-                >
-                  Book Now
-                </button>
-              </div>
-            </div>
-
-            {/* Card 3 */}
-            <div className="bg-white border rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all transform hover:-translate-y-2">
-              <div className="h-48 bg-gradient-to-br from-purple-400 to-indigo-500 flex items-center justify-center">
-                <svg
-                  className="w-20 h-20 text-white opacity-50"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </div>
-              <div className="p-5">
-                <div className="flex items-center gap-2 text-sm text-gray-500 mb-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                    />
-                  </svg>
-                  Mar 18, 2025
-                </div>
-                <h4 className="text-xl font-bold text-gray-900 mb-2">
-                  Startup Meetup
-                </h4>
-                <p className="text-gray-600 mb-4 flex items-center gap-2">
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                    />
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                    />
-                  </svg>
-                  Lalitpur
-                </p>
-                <button
-                  onClick={() => navigate("/events/3")}
-                  className="w-full px-4 py-3 bg-red-600 text-white font-semibold rounded-xl hover:bg-red-700 transition"
-                >
-                  Book Now
-                </button>
-              </div>
-            </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 justify-items-center">
+            {featuredEvents.map((event) => (
+              <EventCard
+                key={event.id}
+                title={event.title}
+                date={event.date}
+                location={event.location}
+                imageUrl={event.imageUrl}
+                onViewDetails={() => navigate(`/events/${event.id}`)}
+              />
+            ))}
           </div>
         </div>
       </section>
