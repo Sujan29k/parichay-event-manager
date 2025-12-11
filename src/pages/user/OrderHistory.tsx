@@ -4,46 +4,77 @@ import { ShoppingBag, Ticket, DollarSign } from "lucide-react";
 import Navbar from "../../components/common/Navbar";
 import Footer from "../../components/common/Footer";
 
+interface Order {
+  bookingId: string;
+  id: number;
+  title: string;
+  date: string;
+  location: string;
+  quantity: number;
+  totalAmount: number;
+  bookingDate: string;
+  paymentMethod: string;
+  walletType?: string;
+  bankName?: string;
+}
+
 export default function OrderHistory() {
   const navigate = useNavigate();
-  const [orders, setOrders] = useState<any[]>([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  useEffect(() => {
-    // Check if user is logged in
+  // Lazy initialize from localStorage
+  const [orders] = useState<Order[]>(() => {
     const token = localStorage.getItem("token");
     const currentUser = localStorage.getItem("currentUser");
-    
+
     if (!token || !currentUser) {
-      navigate("/login");
-      return;
+      return [];
     }
 
-    setIsLoggedIn(true);
-    
-    // Load user's bookings from localStorage
     const user = JSON.parse(currentUser);
-    const userBookings = JSON.parse(localStorage.getItem(`bookings_${user.id}`) || "[]");
-    
-    // Sort by booking date, most recent first
-    const sortedBookings = userBookings.sort((a: any, b: any) => 
-      new Date(b.bookingDate).getTime() - new Date(a.bookingDate).getTime()
+    const userBookings = JSON.parse(
+      localStorage.getItem(`bookings_${user.id}`) || "[]"
     );
-    
-    setOrders(sortedBookings);
-  }, [navigate]);
+
+    // Sort by booking date, most recent first
+    return userBookings.sort(
+      (a: Order, b: Order) =>
+        new Date(b.bookingDate).getTime() - new Date(a.bookingDate).getTime()
+    );
+  });
+
+  const [isLoggedIn] = useState(() => {
+    const token = localStorage.getItem("token");
+    const currentUser = localStorage.getItem("currentUser");
+    return !!(token && currentUser);
+  });
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn, navigate]);
 
   // Calculate stats
-  const totalTickets = orders.reduce((sum, order) => sum + (order.quantity || 0), 0);
-  const totalSpent = orders.reduce((sum, order) => sum + (order.totalAmount || 0), 0);
+  const totalTickets = orders.reduce(
+    (sum, order) => sum + (order.quantity || 0),
+    0
+  );
+  const totalSpent = orders.reduce(
+    (sum, order) => sum + (order.totalAmount || 0),
+    0
+  );
 
   if (!isLoggedIn) {
     return null;
   }
 
-  const getPaymentMethodDisplay = (order: any) => {
+  const getPaymentMethodDisplay = (order: Order) => {
     if (order.paymentMethod === "wallet" || order.paymentMethod === "upi") {
-      return order.walletType === "esewa" ? "eSewa" : order.walletType === "khalti" ? "Khalti" : "Digital Wallet";
+      return order.walletType === "esewa"
+        ? "eSewa"
+        : order.walletType === "khalti"
+        ? "Khalti"
+        : "Digital Wallet";
     } else if (order.paymentMethod === "card") {
       return "Card";
     } else if (order.paymentMethod === "netbanking") {
@@ -53,9 +84,9 @@ export default function OrderHistory() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
       <Navbar />
-      
+
       <div className="pt-24 pb-16 px-6">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
@@ -74,7 +105,9 @@ export default function OrderHistory() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Total Orders</p>
-                  <p className="text-3xl font-bold text-gray-900">{orders.length}</p>
+                  <p className="text-3xl font-bold text-gray-900">
+                    {orders.length}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
                   <ShoppingBag className="w-6 h-6 text-red-600" />
@@ -100,7 +133,9 @@ export default function OrderHistory() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600 mb-1">Total Spent</p>
-                  <p className="text-3xl font-bold text-gray-900">₹{totalSpent.toFixed(2)}</p>
+                  <p className="text-3xl font-bold text-gray-900">
+                    ₹{totalSpent.toFixed(2)}
+                  </p>
                 </div>
                 <div className="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center">
                   <DollarSign className="w-6 h-6 text-green-600" />
@@ -148,22 +183,28 @@ export default function OrderHistory() {
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                         <div>
                           <p className="text-gray-500">Order ID</p>
-                          <p className="font-semibold text-gray-900">{order.bookingId}</p>
+                          <p className="font-semibold text-gray-900">
+                            {order.bookingId}
+                          </p>
                         </div>
                         <div>
                           <p className="text-gray-500">Date</p>
                           <p className="font-semibold text-gray-900">
-                            {new Date(order.bookingDate).toLocaleDateString('en-US', { 
-                              month: 'short', 
-                              day: 'numeric', 
-                              year: 'numeric' 
-                            })}
+                            {new Date(order.bookingDate).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                                year: "numeric",
+                              }
+                            )}
                           </p>
                         </div>
                         <div>
                           <p className="text-gray-500">Tickets</p>
                           <p className="font-semibold text-gray-900">
-                            {order.quantity} {order.quantity > 1 ? "tickets" : "ticket"}
+                            {order.quantity}{" "}
+                            {order.quantity > 1 ? "tickets" : "ticket"}
                           </p>
                         </div>
                         <div>
@@ -175,8 +216,10 @@ export default function OrderHistory() {
                       </div>
                     </div>
                     <div className="flex flex-col items-end gap-3">
-                      <p className="text-2xl font-bold text-gray-900">₹{order.totalAmount?.toFixed(2)}</p>
-                      <button 
+                      <p className="text-2xl font-bold text-gray-900">
+                        ₹{order.totalAmount?.toFixed(2)}
+                      </p>
+                      <button
                         onClick={() => navigate(`/events/${order.id}`)}
                         className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition text-sm"
                       >
@@ -190,7 +233,7 @@ export default function OrderHistory() {
           )}
         </div>
       </div>
-      
+
       <Footer />
     </div>
   );

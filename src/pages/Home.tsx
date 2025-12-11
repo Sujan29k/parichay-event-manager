@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import EventCard from "../components/common/EventCard";
 
+interface CurrentUser {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  isFirstLogin?: boolean;
+}
+
 export default function Home() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [currentUser, setCurrentUser] = useState<any>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
 
   // Check login status on component mount and route changes
   useEffect(() => {
     const checkLoginStatus = () => {
       const token = localStorage.getItem("token");
       const user = localStorage.getItem("currentUser");
-      
+
       if (token && user) {
         setIsLoggedIn(true);
         setCurrentUser(JSON.parse(user));
@@ -28,10 +36,10 @@ export default function Home() {
     checkLoginStatus();
 
     // Listen for storage changes (when user logs out in another tab or component)
-    window.addEventListener('storage', checkLoginStatus);
-    
+    window.addEventListener("storage", checkLoginStatus);
+
     return () => {
-      window.removeEventListener('storage', checkLoginStatus);
+      window.removeEventListener("storage", checkLoginStatus);
     };
   }, [location]);
 
@@ -63,21 +71,24 @@ export default function Home() {
   ];
 
   return (
-    <div className="bg-gradient-to-b from-white to-gray-50 text-gray-800 min-h-screen">
+    <div className="bg-linear-to-b from-white to-gray-50 text-gray-800 min-h-screen">
       {/* Navbar */}
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 bg-gradient-to-br from-red-50 via-white to-red-50">
+      <section className="relative pt-32 pb-20 px-6 bg-linear-to-br from-red-50 via-white to-red-50">
         <div className="max-w-6xl mx-auto text-center">
           {isLoggedIn && currentUser ? (
             <>
               <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
                 {currentUser.isFirstLogin ? "Welcome," : "Welcome back,"}
-                <span className="block text-red-600 mt-2">{currentUser.fullName}! 👋</span>
+                <span className="block text-red-600 mt-2">
+                  {currentUser.fullName}! 👋
+                </span>
               </h2>
               <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
-                Ready to discover your next amazing experience? Explore trending events, book tickets, and create unforgettable memories!
+                Ready to discover your next amazing experience? Explore trending
+                events, book tickets, and create unforgettable memories!
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <button
@@ -102,7 +113,8 @@ export default function Home() {
               </h2>
               <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
                 Parichaya Events is your all-in-one platform to discover events,
-                book tickets instantly, and manage your event experience with ease.
+                book tickets instantly, and manage your event experience with
+                ease.
               </p>
               <div className="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
                 <button
@@ -203,7 +215,7 @@ export default function Home() {
       </section>
 
       {/* Upcoming Events */}
-      <section className="px-6 py-20 bg-gradient-to-b from-gray-50 to-white">
+      <section className="px-6 py-20 bg-linear-to-b from-gray-50 to-white">
         <div className="max-w-6xl mx-auto">
           <div className="flex justify-between items-center mb-12">
             <h3 className="text-4xl font-bold text-gray-900">
@@ -247,7 +259,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-gradient-to-r from-red-600 to-red-700">
+      <section className="py-20 px-6 bg-linear-to-r from-red-600 to-red-700">
         <div className="max-w-4xl mx-auto text-center text-white">
           <h3 className="text-4xl font-bold mb-4">
             Ready to Experience Amazing Events?

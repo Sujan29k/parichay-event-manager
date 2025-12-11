@@ -2,6 +2,16 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../../components/common/Navbar";
 
+interface User {
+  id: string;
+  fullName: string;
+  email: string;
+  phone: string;
+  password: string;
+  loginCount?: number;
+  lastLogin?: string;
+}
+
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -9,13 +19,13 @@ export default function Login() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Get users from localStorage (frontend-only demo)
-    const users = JSON.parse(localStorage.getItem("users") || "[]");
-    
+    const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
+
     // Find user by email and password
     const user = users.find(
-      (u: any) => u.email === email && u.password === password
+      (u) => u.email === email && u.password === password
     );
 
     if (!user) {
@@ -27,28 +37,35 @@ export default function Login() {
     const isFirstLogin = !user.loginCount || user.loginCount === 0;
     user.loginCount = (user.loginCount || 0) + 1;
     user.lastLogin = new Date().toISOString();
-    
+
     // Update users array in localStorage
-    const userIndex = users.findIndex((u: any) => u.id === user.id);
+    const userIndex = users.findIndex((u) => u.id === user.id);
     users[userIndex] = user;
     localStorage.setItem("users", JSON.stringify(users));
 
     // Store authentication token
     localStorage.setItem("token", `demo-token-${user.id}`);
-    localStorage.setItem("currentUser", JSON.stringify({
-      id: user.id,
-      fullName: user.fullName,
-      email: user.email,
-      phone: user.phone,
-      isFirstLogin: isFirstLogin
-    }));
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify({
+        id: user.id,
+        fullName: user.fullName,
+        email: user.email,
+        phone: user.phone,
+        isFirstLogin: isFirstLogin,
+      })
+    );
 
-    alert(isFirstLogin ? `Welcome, ${user.fullName}!` : `Welcome back, ${user.fullName}!`);
+    alert(
+      isFirstLogin
+        ? `Welcome, ${user.fullName}!`
+        : `Welcome back, ${user.fullName}!`
+    );
     navigate("/");
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
       <Navbar />
 
       <div className="pt-24 pb-16 px-6">
