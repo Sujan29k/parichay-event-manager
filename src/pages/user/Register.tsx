@@ -44,6 +44,7 @@ export default function Register() {
       email: formData.email,
       phone: formData.phone,
       password: formData.password, // In real app, this would be hashed
+      loginCount: 0,
       createdAt: new Date().toISOString()
     };
 
@@ -56,7 +57,8 @@ export default function Register() {
       id: newUser.id,
       fullName: newUser.fullName,
       email: newUser.email,
-      phone: newUser.phone
+      phone: newUser.phone,
+      isFirstLogin: true
     }));
 
     alert("Account created successfully! Welcome to Parichaya Events!");

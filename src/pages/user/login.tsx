@@ -23,16 +23,27 @@ export default function Login() {
       return;
     }
 
+    // Update login count
+    const isFirstLogin = !user.loginCount || user.loginCount === 0;
+    user.loginCount = (user.loginCount || 0) + 1;
+    user.lastLogin = new Date().toISOString();
+    
+    // Update users array in localStorage
+    const userIndex = users.findIndex((u: any) => u.id === user.id);
+    users[userIndex] = user;
+    localStorage.setItem("users", JSON.stringify(users));
+
     // Store authentication token
     localStorage.setItem("token", `demo-token-${user.id}`);
     localStorage.setItem("currentUser", JSON.stringify({
       id: user.id,
       fullName: user.fullName,
       email: user.email,
-      phone: user.phone
+      phone: user.phone,
+      isFirstLogin: isFirstLogin
     }));
 
-    alert(`Welcome back, ${user.fullName}!`);
+    alert(isFirstLogin ? `Welcome, ${user.fullName}!` : `Welcome back, ${user.fullName}!`);
     navigate("/");
   };
 
@@ -52,7 +63,7 @@ export default function Login() {
               />
             </div>
             <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Welcome Back rupesh
+              Welcome Back
             </h1>
             <p className="text-gray-600">
               Sign in to access your tickets and events

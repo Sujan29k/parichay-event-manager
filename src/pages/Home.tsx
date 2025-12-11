@@ -1,24 +1,39 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import EventCard from "../components/common/EventCard";
 
 export default function Home() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState<any>(null);
 
-  // Check login status
+  // Check login status on component mount and route changes
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("currentUser");
+    const checkLoginStatus = () => {
+      const token = localStorage.getItem("token");
+      const user = localStorage.getItem("currentUser");
+      
+      if (token && user) {
+        setIsLoggedIn(true);
+        setCurrentUser(JSON.parse(user));
+      } else {
+        setIsLoggedIn(false);
+        setCurrentUser(null);
+      }
+    };
+
+    checkLoginStatus();
+
+    // Listen for storage changes (when user logs out in another tab or component)
+    window.addEventListener('storage', checkLoginStatus);
     
-    if (token && user) {
-      setIsLoggedIn(true);
-      setCurrentUser(JSON.parse(user));
-    }
-  }, []);
+    return () => {
+      window.removeEventListener('storage', checkLoginStatus);
+    };
+  }, [location]);
 
   const featuredEvents = [
     {
@@ -58,7 +73,7 @@ export default function Home() {
           {isLoggedIn && currentUser ? (
             <>
               <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
-                Welcome back,
+                {currentUser.isFirstLogin ? "Welcome," : "Welcome back,"}
                 <span className="block text-red-600 mt-2">{currentUser.fullName}! 👋</span>
               </h2>
               <p className="mt-6 text-xl text-gray-600 max-w-3xl mx-auto">
