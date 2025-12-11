@@ -2,12 +2,12 @@ import { useState } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 
-export default function UserLayout() {
+export default function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  const [user] = useState({
-    name: "Rupesh Paudel",
-    email: "rupesh@example.com",
+  const [admin] = useState({
+    name: "Admin User",
+    email: "admin@parichaya.com",
     avatar: "/parichaya.jpeg",
   });
 
@@ -15,8 +15,46 @@ export default function UserLayout() {
 
   const menuItems = [
     {
-      path: "/my-tickets",
-      label: "My Tickets",
+      path: "/admin/dashboard",
+      label: "Dashboard",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+          />
+        </svg>
+      ),
+    },
+    {
+      path: "/admin/events",
+      label: "Manage Events",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+          />
+        </svg>
+      ),
+    },
+    {
+      path: "/admin/bookings",
+      label: "Bookings",
       icon: (
         <svg
           className="w-5 h-5"
@@ -34,8 +72,8 @@ export default function UserLayout() {
       ),
     },
     {
-      path: "/order-history",
-      label: "Order History",
+      path: "/admin/users",
+      label: "User Management",
       icon: (
         <svg
           className="w-5 h-5"
@@ -47,14 +85,14 @@ export default function UserLayout() {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
+            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
           />
         </svg>
       ),
     },
     {
-      path: "/profile",
-      label: "Profile Settings",
+      path: "/admin/analytics",
+      label: "Analytics",
       icon: (
         <svg
           className="w-5 h-5"
@@ -66,7 +104,7 @@ export default function UserLayout() {
             strokeLinecap="round"
             strokeLinejoin="round"
             strokeWidth={2}
-            d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+            d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
           />
         </svg>
       ),
@@ -83,20 +121,35 @@ export default function UserLayout() {
             {/* Sidebar */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 sticky top-28">
-                {/* User Profile Card */}
+                {/* Admin Profile Card */}
                 <div className="text-center mb-6 pb-6 border-b border-gray-200">
                   <div className="relative inline-block mb-4">
                     <img
-                      src={user.avatar}
-                      alt={user.name}
+                      src={admin.avatar}
+                      alt={admin.name}
                       className="w-20 h-20 rounded-full object-cover border-4 border-red-100"
                     />
-                    <div className="absolute bottom-0 right-0 w-5 h-5 bg-green-500 rounded-full border-2 border-white"></div>
+                    <div className="absolute bottom-0 right-0 w-6 h-6 bg-red-600 rounded-full border-2 border-white flex items-center justify-center">
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="currentColor"
+                        viewBox="0 0 20 20"
+                      >
+                        <path
+                          fillRule="evenodd"
+                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
                   </div>
                   <h3 className="text-lg font-bold text-gray-900">
-                    {user.name}
+                    {admin.name}
                   </h3>
-                  <p className="text-sm text-gray-500">{user.email}</p>
+                  <p className="text-sm text-gray-500">{admin.email}</p>
+                  <span className="inline-block mt-2 px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
+                    Administrator
+                  </span>
                 </div>
 
                 {/* Navigation Menu */}

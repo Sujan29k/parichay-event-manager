@@ -8,8 +8,13 @@ import DownloadApp from "../pages/DownloadApp";
 import Login from "../pages/user/login";
 import Register from "../pages/user/Register";
 import MyTickets from "../pages/user/MyTickets";
+import OrderHistory from "../pages/user/OrderHistory";
+import Profile from "../pages/user/Profile";
 import FAQ from "../pages/support/FAQ";
 import Contact from "../pages/support/Contact";
+import UserLayout from "../layouts/UserLayout";
+import AdminLayout from "../layouts/AdminLayout";
+import Dashboard from "../pages/admin/Dashboard";
 
 const AppRoutes = () => {
   return (
@@ -28,7 +33,17 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        <Route path="/my-tickets" element={<MyTickets />} />
+        {/* User Dashboard Routes */}
+        <Route element={<UserLayout />}>
+          <Route path="/my-tickets" element={<MyTickets />} />
+          <Route path="/order-history" element={<OrderHistory />} />
+          <Route path="/profile" element={<Profile />} />
+        </Route>
+
+        {/* Admin Dashboard Routes */}
+        <Route element={<AdminLayout />}>
+          <Route path="/admin/dashboard" element={<Dashboard />} />
+        </Route>
 
         <Route path="/faq" element={<FAQ />} />
         <Route path="/contact" element={<Contact />} />
