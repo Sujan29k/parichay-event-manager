@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
-import EventCard from "../components/events/EventCard";
+import EventCard from "../components/common/EventCard";
 
 export default function Events() {
   const navigate = useNavigate();
@@ -106,6 +106,7 @@ export default function Events() {
             {events.map((event) => (
               <EventCard
                 key={event.id}
+                id={String(event.id)}
                 title={event.title}
                 date={event.date}
                 location={event.location}

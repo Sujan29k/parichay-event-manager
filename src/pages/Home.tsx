@@ -2,7 +2,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
-import EventCard from "../components/events/EventCard";
+import EventCard from "../components/common/EventCard";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -178,6 +178,7 @@ export default function Home() {
             {featuredEvents.map((event) => (
               <EventCard
                 key={event.id}
+                id={String(event.id)}
                 title={event.title}
                 date={event.date}
                 location={event.location}

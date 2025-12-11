@@ -2,6 +2,7 @@ import React from "react";
 import { MapPin, Calendar, ArrowRight } from "lucide-react";
 
 interface EventCardProps {
+  id: string;
   title: string;
   date: string;
   location: string;
@@ -17,7 +18,10 @@ export default function EventCard({
   onViewDetails,
 }: EventCardProps) {
   return (
-    <div className="w-full max-w-sm mx-auto rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white border border-gray-200 hover:border-red-300 transform hover:-translate-y-1">
+    <div
+      onClick={onViewDetails}
+      className="w-full max-w-sm mx-auto rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden bg-white border border-gray-200 hover:border-red-300 transform hover:-translate-y-1 cursor-pointer"
+    >
       {/* Image Section */}
       <div className="h-48 w-full overflow-hidden bg-gradient-to-br from-red-100 to-red-50">
         <img
@@ -46,7 +50,10 @@ export default function EventCard({
         </div>
 
         <button
-          onClick={onViewDetails}
+          onClick={(e) => {
+            e.stopPropagation();
+            onViewDetails();
+          }}
           className="w-full mt-4 px-4 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg transform hover:scale-105"
         >
           View Details
