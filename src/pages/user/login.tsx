@@ -20,6 +20,25 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Check for admin credentials first
+    if (email === "admin@parichaya.com" && password === "admin123") {
+      // Admin login
+      localStorage.setItem("token", "admin-token-parichaya");
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify({
+          id: "admin-001",
+          fullName: "Admin User",
+          email: "admin@parichaya.com",
+          phone: "+91 9876543210",
+          role: "admin",
+        })
+      );
+      alert("Welcome Admin! Redirecting to dashboard...");
+      navigate("/admin/dashboard");
+      return;
+    }
+
     // Get users from localStorage (frontend-only demo)
     const users: User[] = JSON.parse(localStorage.getItem("users") || "[]");
 

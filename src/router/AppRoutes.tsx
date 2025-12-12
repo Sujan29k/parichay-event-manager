@@ -15,6 +15,11 @@ import Contact from "../pages/support/Contact";
 import UserLayout from "../layouts/UserLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
+import ManageEvents from "../pages/admin/ManageEvents";
+import Bookings from "../pages/admin/Bookings";
+import UserManagement from "../pages/admin/UserManagement";
+import Settings from "../pages/admin/Settings";
+import Analytics from "../pages/admin/Analytics";
 
 const AppRoutes = () => {
   return (
@@ -43,6 +48,11 @@ const AppRoutes = () => {
         {/* Admin Dashboard Routes */}
         <Route element={<AdminLayout />}>
           <Route path="/admin/dashboard" element={<Dashboard />} />
+          <Route path="/admin/events" element={<ManageEvents />} />
+          <Route path="/admin/bookings" element={<Bookings />} />
+          <Route path="/admin/users" element={<UserManagement />} />
+          <Route path="/admin/analytics" element={<Analytics />} />
+          <Route path="/admin/settings" element={<Settings />} />
         </Route>
 
         <Route path="/faq" element={<FAQ />} />

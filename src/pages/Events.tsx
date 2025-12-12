@@ -1,67 +1,12 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import EventCard from "../components/common/EventCard";
+import { useEvents } from "../context/EventContext";
 
 export default function Events() {
   const navigate = useNavigate();
-
-  const events = [
-    {
-      id: 1,
-      title: "Music Concert 2026",
-      date: "Jan 15, 2026",
-      location: "Kathmandu",
-      category: "Music",
-      imageUrl:
-        "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500",
-    },
-    {
-      id: 2,
-      title: "Tech Expo Nepal",
-      date: "Feb 20, 2026",
-      location: "Pokhara",
-      category: "Technology",
-      imageUrl:
-        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500",
-    },
-    {
-      id: 3,
-      title: "Startup Meetup",
-      date: "Mar 10, 2026",
-      location: "Lalitpur",
-      category: "Business",
-      imageUrl:
-        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=500",
-    },
-    {
-      id: 4,
-      title: "Food Festival",
-      date: "Apr 18, 2026",
-      location: "Kathmandu",
-      category: "Food",
-      imageUrl:
-        "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?w=500",
-    },
-    {
-      id: 5,
-      title: "Art Exhibition",
-      date: "May 22, 2026",
-      location: "Patan",
-      category: "Arts",
-      imageUrl:
-        "https://images.unsplash.com/photo-1460661419201-fd4cecdf8a8b?w=500",
-    },
-    {
-      id: 6,
-      title: "Marathon 2026",
-      date: "Jun 20, 2026",
-      location: "Pokhara",
-      category: "Sports",
-      imageUrl:
-        "https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=500",
-    },
-  ];
+  const { getActiveEvents } = useEvents();
+  const events = getActiveEvents();
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -110,7 +55,7 @@ export default function Events() {
                 title={event.title}
                 date={event.date}
                 location={event.location}
-                imageUrl={event.imageUrl}
+                imageUrl={event.image}
                 onViewDetails={() => navigate(`/events/${event.id}`)}
               />
             ))}
