@@ -72,22 +72,14 @@ export default function Navbar() {
             Events
           </button>
           <button
-            onClick={() => navigate("/contact")}
+            onClick={() => navigate("/help")}
             className={`hover:text-red-600 transition ${
-              isActive("/contact")
+              isActive("/help") || isActive("/support") || isActive("/contact") || isActive("/faq")
                 ? "text-red-600 font-semibold"
                 : "text-gray-700"
             }`}
           >
-            Contact
-          </button>
-          <button
-            onClick={() => navigate("/faq")}
-            className={`hover:text-red-600 transition ${
-              isActive("/faq") ? "text-red-600 font-semibold" : "text-gray-700"
-            }`}
-          >
-            FAQ
+            Help & Support
           </button>
           <button
             onClick={() => navigate("/download")}
@@ -266,29 +258,16 @@ export default function Navbar() {
             </button>
             <button
               onClick={() => {
-                navigate("/contact");
+                navigate("/help");
                 setMobileMenuOpen(false);
               }}
               className={`text-left hover:text-red-600 transition ${
-                isActive("/contact")
+                isActive("/help") || isActive("/support") || isActive("/contact") || isActive("/faq")
                   ? "text-red-600 font-semibold"
                   : "text-gray-700"
               }`}
             >
-              Contact
-            </button>
-            <button
-              onClick={() => {
-                navigate("/faq");
-                setMobileMenuOpen(false);
-              }}
-              className={`text-left hover:text-red-600 transition ${
-                isActive("/faq")
-                  ? "text-red-600 font-semibold"
-                  : "text-gray-700"
-              }`}
-            >
-              FAQ
+              Help & Support
             </button>
             <button
               onClick={() => {
