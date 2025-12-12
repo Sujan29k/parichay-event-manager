@@ -52,8 +52,8 @@ export default function Home() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative pt-32 pb-20 px-6 bg-linear-to-br from-red-50 via-white to-red-50">
-        <div className="max-w-6xl mx-auto text-center">
+      <section className="relative pt-32 pb-20 px-8 bg-linear-to-br from-red-50 via-white to-red-50">
+        <div className="w-full text-center">
           {isLoggedIn && currentUser ? (
             <>
               <h2 className="text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight">
@@ -116,8 +116,8 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 px-6 bg-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-16 px-8 bg-white">
+        <div className="w-full max-w-[1600px] mx-auto">
           <h3 className="text-3xl font-bold text-center mb-12 text-gray-900">
             Why Choose Parichaya?
           </h3>
@@ -191,8 +191,8 @@ export default function Home() {
       </section>
 
       {/* Upcoming Events */}
-      <section className="px-6 py-20 bg-linear-to-b from-gray-50 to-white">
-        <div className="max-w-6xl mx-auto">
+      <section className="px-8 py-20 bg-linear-to-b from-gray-50 to-white">
+        <div className="w-full max-w-[1600px] mx-auto">
           <div className="flex justify-between items-center mb-12">
             <h3 className="text-4xl font-bold text-gray-900">
               Upcoming Events
@@ -235,8 +235,8 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-6 bg-linear-to-r from-red-600 to-red-700">
-        <div className="max-w-4xl mx-auto text-center text-white">
+      <section className="py-20 px-8 bg-linear-to-r from-red-600 to-red-700">
+        <div className="w-full text-center text-white">
           <h3 className="text-4xl font-bold mb-4">
             Ready to Experience Amazing Events?
           </h3>
