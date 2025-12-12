@@ -4,25 +4,25 @@ import { Outlet, useNavigate, useLocation } from "react-router-dom";
 export default function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Check admin authentication
   useEffect(() => {
     const token = localStorage.getItem("token");
     const userStr = localStorage.getItem("currentUser");
-    
+
     if (!token || !userStr) {
       alert("Please login as admin to access this page!");
       navigate("/login");
       return;
     }
-    
+
     try {
       const user = JSON.parse(userStr);
       if (user.role !== "admin") {
         alert("Access Denied! Admin privileges required.");
         navigate("/");
       }
-    } catch (error) {
+    } catch {
       alert("Invalid session. Please login again.");
       navigate("/login");
     }
@@ -66,7 +66,7 @@ export default function AdminLayout() {
 
   // Close mobile sidebar on route change
   useEffect(() => {
-    setSidebarOpen(false);
+    return () => setSidebarOpen(false);
   }, [location.pathname]);
 
   // Close sidebar and notifications when clicking outside
@@ -76,7 +76,10 @@ export default function AdminLayout() {
       if (!target.closest(".sidebar") && !target.closest(".sidebar-toggle")) {
         setSidebarOpen(false);
       }
-      if (!target.closest(".notifications-dropdown") && !target.closest(".notifications-btn")) {
+      if (
+        !target.closest(".notifications-dropdown") &&
+        !target.closest(".notifications-btn")
+      ) {
         setShowNotifications(false);
       }
     };
@@ -214,7 +217,7 @@ export default function AdminLayout() {
     switch (type) {
       case "success":
         return (
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+          <div className="shrink-0 w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
             <svg
               className="w-5 h-5 text-green-600"
               fill="none"
@@ -232,7 +235,7 @@ export default function AdminLayout() {
         );
       case "warning":
         return (
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
+          <div className="shrink-0 w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center">
             <svg
               className="w-5 h-5 text-yellow-600"
               fill="none"
@@ -250,7 +253,7 @@ export default function AdminLayout() {
         );
       default:
         return (
-          <div className="flex-shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+          <div className="shrink-0 w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
             <svg
               className="w-5 h-5 text-blue-600"
               fill="none"
@@ -282,10 +285,10 @@ export default function AdminLayout() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
       {/* Admin Top Navbar */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md">
-        <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-white shadow-md lg:pl-72">
+        <div className="flex items-center justify-between px-6 py-4">
           {/* Logo & Admin Badge */}
           <div className="flex items-center gap-4">
             <div
@@ -298,7 +301,9 @@ export default function AdminLayout() {
                 className="h-10 w-10 rounded-full object-cover"
               />
               <div>
-                <h1 className="text-xl font-bold text-red-600">Parichaya Events</h1>
+                <h1 className="text-xl font-bold text-red-600">
+                  Parichaya Events
+                </h1>
                 <p className="text-xs text-gray-500 font-medium">Admin Panel</p>
               </div>
             </div>
@@ -331,7 +336,7 @@ export default function AdminLayout() {
               </svg>
               <span>View Site</span>
             </button>
-            
+
             <div className="flex items-center gap-3 px-4 py-2 bg-red-50 rounded-lg border border-red-200">
               <img
                 src={admin.avatar}
@@ -339,7 +344,9 @@ export default function AdminLayout() {
                 className="w-8 h-8 rounded-full object-cover"
               />
               <div className="hidden md:block">
-                <p className="text-sm font-semibold text-gray-900">{admin.name}</p>
+                <p className="text-sm font-semibold text-gray-900">
+                  {admin.name}
+                </p>
                 <p className="text-xs text-gray-500">Administrator</p>
               </div>
             </div>
@@ -347,8 +354,8 @@ export default function AdminLayout() {
         </div>
       </header>
 
-      <div className="pt-24 pb-16 px-6">
-        <div className="max-w-7xl mx-auto">
+      <div className="lg:pl-72 pt-24 pb-16 px-6">
+        <div className="w-full">
           {/* Admin Header Bar */}
           <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 mb-8">
             <div className="flex items-center justify-between">
@@ -503,105 +510,115 @@ export default function AdminLayout() {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-4 gap-8">
-            {/* Sidebar */}
-            <div className="lg:col-span-1">
-              {/* Mobile Overlay */}
-              {sidebarOpen && (
-                <div
-                  className="lg:hidden fixed inset-0 bg-black/50 z-40"
-                  onClick={() => setSidebarOpen(false)}
-                ></div>
-              )}
+          {/* Sidebar */}
+          {/* Mobile Overlay */}
+          {sidebarOpen && (
+            <div
+              className="lg:hidden fixed inset-0 bg-black/50 z-40"
+              onClick={() => setSidebarOpen(false)}
+            ></div>
+          )}
 
-              <div
-                className={`sidebar bg-white rounded-2xl shadow-md border border-gray-100 p-6 lg:sticky lg:top-28 transition-transform duration-300 ${
-                  sidebarOpen
-                    ? "fixed top-24 left-6 right-6 z-50 max-w-sm"
-                    : "hidden lg:block"
-                }`}
-              >
-                {/* Admin Profile Card */}
-                <div className="text-center mb-6 pb-6 border-b border-gray-200">
-                  <div className="relative inline-block mb-4">
-                    <img
-                      src={admin.avatar}
-                      alt={admin.name}
-                      className="w-20 h-20 rounded-full object-cover border-4 border-red-100"
-                    />
-                    <div className="absolute bottom-0 right-0 w-6 h-6 bg-red-600 rounded-full border-2 border-white flex items-center justify-center">
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                  <h3 className="text-lg font-bold text-gray-900">
-                    {admin.name}
-                  </h3>
-                  <p className="text-sm text-gray-500">{admin.email}</p>
-                  <span className="inline-block mt-2 px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
-                    Administrator
-                  </span>
-                </div>
-
-                {/* Navigation Menu */}
-                <nav className="space-y-2">
-                  {menuItems.map((item) => (
-                    <button
-                      key={item.path}
-                      onClick={() => navigate(item.path)}
-                      className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
-                        isActive(item.path)
-                          ? "bg-red-50 text-red-600 font-semibold border border-red-200"
-                          : "text-gray-700 hover:bg-gray-50 border border-transparent hover:border-gray-200"
-                      }`}
-                    >
-                      {item.icon}
-                      <span>{item.label}</span>
-                    </button>
-                  ))}
-                </nav>
-
-                {/* Logout Button */}
-                <button
-                  onClick={() => {
-                    localStorage.removeItem("token");
-                    localStorage.removeItem("currentUser");
-                    alert("You have been logged out successfully!");
-                    navigate("/login");
-                  }}
-                  className="w-full mt-6 flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all font-medium"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
-                    />
-                  </svg>
-                  Logout
-                </button>
+          <div
+            className={`sidebar bg-white shadow-lg border-r border-gray-100 p-6 fixed top-0 left-0 h-screen w-64 overflow-y-auto transition-transform duration-300 ${
+              sidebarOpen
+                ? "translate-x-0 z-50"
+                : "-translate-x-full lg:translate-x-0"
+            }`}
+          >
+            {/* Logo Section */}
+            <div
+              className="flex items-center gap-3 cursor-pointer mb-6 pb-6 border-b border-gray-200"
+              onClick={() => navigate("/admin/dashboard")}
+            >
+              <img
+                src="/parichaya.jpeg"
+                alt="Parichaya Logo"
+                className="h-10 w-10 rounded-full object-cover"
+              />
+              <div>
+                <h1 className="text-lg font-bold text-red-600">Parichaya</h1>
+                <p className="text-xs text-gray-500 font-medium">Admin Panel</p>
               </div>
             </div>
 
-            {/* Main Content Area */}
-            <div className="lg:col-span-3">
-              <Outlet />
+            {/* Admin Profile Card */}
+            <div className="text-center mb-6 pb-6 border-b border-gray-200">
+              <div className="relative inline-block mb-4">
+                <img
+                  src={admin.avatar}
+                  alt={admin.name}
+                  className="w-20 h-20 rounded-full object-cover border-4 border-red-100"
+                />
+                <div className="absolute bottom-0 right-0 w-6 h-6 bg-red-600 rounded-full border-2 border-white flex items-center justify-center">
+                  <svg
+                    className="w-3 h-3 text-white"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
+                </div>
+              </div>
+              <h3 className="text-lg font-bold text-gray-900">{admin.name}</h3>
+              <p className="text-sm text-gray-500">{admin.email}</p>
+              <span className="inline-block mt-2 px-3 py-1 bg-red-100 text-red-700 text-xs font-semibold rounded-full">
+                Administrator
+              </span>
             </div>
+
+            {/* Navigation Menu */}
+            <nav className="space-y-2">
+              {menuItems.map((item) => (
+                <button
+                  key={item.path}
+                  onClick={() => navigate(item.path)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${
+                    isActive(item.path)
+                      ? "bg-red-50 text-red-600 font-semibold border border-red-200"
+                      : "text-gray-700 hover:bg-gray-50 border border-transparent hover:border-gray-200"
+                  }`}
+                >
+                  {item.icon}
+                  <span>{item.label}</span>
+                </button>
+              ))}
+            </nav>
+
+            {/* Logout Button */}
+            <button
+              onClick={() => {
+                localStorage.removeItem("token");
+                localStorage.removeItem("currentUser");
+                alert("You have been logged out successfully!");
+                navigate("/login");
+              }}
+              className="w-full mt-6 flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all font-medium"
+            >
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                />
+              </svg>
+              Logout
+            </button>
+          </div>
+
+          {/* Main Content Area */}
+          <div className="w-full">
+            <Outlet />
           </div>
         </div>
       </div>

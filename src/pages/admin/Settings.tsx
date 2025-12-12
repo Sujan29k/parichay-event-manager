@@ -2,7 +2,7 @@ import { useState } from "react";
 
 export default function Settings() {
   const [activeTab, setActiveTab] = useState("general");
-  
+
   // General Settings
   const [siteName, setSiteName] = useState("Parichaya Events");
   const [siteEmail, setSiteEmail] = useState("contact@parichaya.com");
@@ -27,7 +27,9 @@ export default function Settings() {
   const [bankTransferEnabled, setBankTransferEnabled] = useState(true);
   const [esewaMerchantId, setEsewaMerchantId] = useState("");
   const [khaltiPublicKey, setKhaltiPublicKey] = useState("");
-  const [bankAccountName, setBankAccountName] = useState("Parichaya Events Pvt. Ltd.");
+  const [bankAccountName, setBankAccountName] = useState(
+    "Parichaya Events Pvt. Ltd."
+  );
   const [bankAccountNumber, setBankAccountNumber] = useState("1234567890");
   const [bankName, setBankName] = useState("Nepal Bank Limited");
 
@@ -42,41 +44,96 @@ export default function Settings() {
   };
 
   const tabs = [
-    { id: "general", label: "General", icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
-    )},
-    { id: "email", label: "Email", icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-      </svg>
-    )},
-    { id: "payment", label: "Payment", icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-      </svg>
-    )},
-    { id: "security", label: "Security", icon: (
-      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-      </svg>
-    )},
+    {
+      id: "general",
+      label: "General",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"
+          />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "email",
+      label: "Email",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "payment",
+      label: "Payment",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "security",
+      label: "Security",
+      icon: (
+        <svg
+          className="w-5 h-5"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+          />
+        </svg>
+      ),
+    },
   ];
 
   return (
     <div className="space-y-6">
-      {/* Header */}
-      <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6">
-        <h2 className="text-2xl font-bold text-gray-900">Settings</h2>
-        <p className="text-gray-600 mt-1">Manage your application settings and preferences</p>
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="flex lg:flex-row flex-col gap-6">
         {/* Sidebar Tabs */}
-        <div className="lg:col-span-1">
-          <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-4 space-y-2">
+        <div className="lg:w-64 shrink-0">
+          <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-4 space-y-2 lg:sticky lg:top-6">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -95,18 +152,24 @@ export default function Settings() {
         </div>
 
         {/* Content Area */}
-        <div className="lg:col-span-3">
+        <div className="flex-1">
           {/* General Settings */}
           {activeTab === "general" && (
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">General Settings</h3>
-                <p className="text-sm text-gray-600 mb-6">Configure basic application settings</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  General Settings
+                </h3>
+                <p className="text-sm text-gray-600 mb-6">
+                  Configure basic application settings
+                </p>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Site Name</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Site Name
+                  </label>
                   <input
                     type="text"
                     value={siteName}
@@ -116,7 +179,9 @@ export default function Settings() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Contact Email</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Contact Email
+                  </label>
                   <input
                     type="email"
                     value={siteEmail}
@@ -126,7 +191,9 @@ export default function Settings() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Contact Phone</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Contact Phone
+                  </label>
                   <input
                     type="tel"
                     value={sitePhone}
@@ -136,7 +203,9 @@ export default function Settings() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Address</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Address
+                  </label>
                   <input
                     type="text"
                     value={siteAddress}
@@ -146,7 +215,9 @@ export default function Settings() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Currency</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Currency
+                  </label>
                   <select
                     value={currency}
                     onChange={(e) => setCurrency(e.target.value)}
@@ -160,7 +231,9 @@ export default function Settings() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Timezone</label>
+                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                    Timezone
+                  </label>
                   <select
                     value={timezone}
                     onChange={(e) => setTimezone(e.target.value)}
@@ -169,7 +242,9 @@ export default function Settings() {
                     <option value="Asia/Kathmandu">Asia/Kathmandu (NPT)</option>
                     <option value="Asia/Kolkata">Asia/Kolkata (IST)</option>
                     <option value="UTC">UTC</option>
-                    <option value="America/New_York">America/New York (EST)</option>
+                    <option value="America/New_York">
+                      America/New York (EST)
+                    </option>
                   </select>
                 </div>
               </div>
@@ -189,13 +264,19 @@ export default function Settings() {
           {activeTab === "email" && (
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Email Settings</h3>
-                <p className="text-sm text-gray-600 mb-6">Configure email notifications and SMTP settings</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  Email Settings
+                </h3>
+                <p className="text-sm text-gray-600 mb-6">
+                  Configure email notifications and SMTP settings
+                </p>
               </div>
 
               <div className="space-y-4">
-                <h4 className="font-semibold text-gray-900">Email Notifications</h4>
-                
+                <h4 className="font-semibold text-gray-900">
+                  Email Notifications
+                </h4>
+
                 <label className="flex items-center gap-3 p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition">
                   <input
                     type="checkbox"
@@ -204,8 +285,12 @@ export default function Settings() {
                     className="w-5 h-5 text-red-600 rounded focus:ring-red-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">Enable Email Notifications</p>
-                    <p className="text-sm text-gray-600">Send automated emails to users</p>
+                    <p className="font-medium text-gray-900">
+                      Enable Email Notifications
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Send automated emails to users
+                    </p>
                   </div>
                 </label>
 
@@ -217,8 +302,12 @@ export default function Settings() {
                     className="w-5 h-5 text-red-600 rounded focus:ring-red-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">Booking Confirmation Emails</p>
-                    <p className="text-sm text-gray-600">Send confirmation when tickets are booked</p>
+                    <p className="font-medium text-gray-900">
+                      Booking Confirmation Emails
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Send confirmation when tickets are booked
+                    </p>
                   </div>
                 </label>
 
@@ -231,7 +320,9 @@ export default function Settings() {
                   />
                   <div>
                     <p className="font-medium text-gray-900">Event Reminders</p>
-                    <p className="text-sm text-gray-600">Send reminders before events</p>
+                    <p className="text-sm text-gray-600">
+                      Send reminders before events
+                    </p>
                   </div>
                 </label>
 
@@ -243,17 +334,25 @@ export default function Settings() {
                     className="w-5 h-5 text-red-600 rounded focus:ring-red-500"
                   />
                   <div>
-                    <p className="font-medium text-gray-900">Marketing Emails</p>
-                    <p className="text-sm text-gray-600">Send promotional emails to users</p>
+                    <p className="font-medium text-gray-900">
+                      Marketing Emails
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Send promotional emails to users
+                    </p>
                   </div>
                 </label>
               </div>
 
               <div className="pt-6 border-t border-gray-200">
-                <h4 className="font-semibold text-gray-900 mb-4">SMTP Configuration</h4>
+                <h4 className="font-semibold text-gray-900 mb-4">
+                  SMTP Configuration
+                </h4>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">SMTP Host</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      SMTP Host
+                    </label>
                     <input
                       type="text"
                       value={smtpHost}
@@ -264,7 +363,9 @@ export default function Settings() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">SMTP Port</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      SMTP Port
+                    </label>
                     <input
                       type="text"
                       value={smtpPort}
@@ -275,7 +376,9 @@ export default function Settings() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">SMTP Username</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      SMTP Username
+                    </label>
                     <input
                       type="text"
                       value={smtpUsername}
@@ -286,7 +389,9 @@ export default function Settings() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">SMTP Password</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      SMTP Password
+                    </label>
                     <input
                       type="password"
                       value={smtpPassword}
@@ -313,8 +418,12 @@ export default function Settings() {
           {activeTab === "payment" && (
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Payment Settings</h3>
-                <p className="text-sm text-gray-600 mb-6">Configure payment gateways and methods</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  Payment Settings
+                </h3>
+                <p className="text-sm text-gray-600 mb-6">
+                  Configure payment gateways and methods
+                </p>
               </div>
 
               <div className="space-y-6">
@@ -327,7 +436,9 @@ export default function Settings() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900">eSewa</h4>
-                        <p className="text-sm text-gray-600">Popular digital wallet in Nepal</p>
+                        <p className="text-sm text-gray-600">
+                          Popular digital wallet in Nepal
+                        </p>
                       </div>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
@@ -337,12 +448,14 @@ export default function Settings() {
                         onChange={(e) => setEsewaEnabled(e.target.checked)}
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
                     </label>
                   </div>
                   {esewaEnabled && (
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Merchant ID</label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Merchant ID
+                      </label>
                       <input
                         type="text"
                         value={esewaMerchantId}
@@ -363,22 +476,28 @@ export default function Settings() {
                       </div>
                       <div>
                         <h4 className="font-semibold text-gray-900">Khalti</h4>
-                        <p className="text-sm text-gray-600">Digital payment gateway</p>
+                        <p className="text-sm text-gray-600">
+                          Digital payment gateway
+                        </p>
                       </div>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={khaltiEnabled}
-                        onChange={(e) => setKhaltiEnabled(e.target.checked)}
+                        checked={bankTransferEnabled}
+                        onChange={(e) =>
+                          setBankTransferEnabled(e.target.checked)
+                        }
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
                     </label>
                   </div>
                   {khaltiEnabled && (
                     <div>
-                      <label className="block text-sm font-semibold text-gray-700 mb-2">Public Key</label>
+                      <label className="block text-sm font-semibold text-gray-700 mb-2">
+                        Public Key
+                      </label>
                       <input
                         type="text"
                         value={khaltiPublicKey}
@@ -395,29 +514,47 @@ export default function Settings() {
                   <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-3">
                       <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                        <svg className="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
+                        <svg
+                          className="w-6 h-6 text-blue-600"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z"
+                          />
                         </svg>
                       </div>
                       <div>
-                        <h4 className="font-semibold text-gray-900">Bank Transfer</h4>
-                        <p className="text-sm text-gray-600">Direct bank deposit</p>
+                        <h4 className="font-semibold text-gray-900">
+                          Bank Transfer
+                        </h4>
+                        <p className="text-sm text-gray-600">
+                          Direct bank deposit
+                        </p>
                       </div>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
                         checked={bankTransferEnabled}
-                        onChange={(e) => setBankTransferEnabled(e.target.checked)}
+                        onChange={(e) =>
+                          setBankTransferEnabled(e.target.checked)
+                        }
                         className="sr-only peer"
                       />
-                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                      <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
                     </label>
                   </div>
                   {bankTransferEnabled && (
                     <div className="space-y-4">
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Account Name</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Account Name
+                        </label>
                         <input
                           type="text"
                           value={bankAccountName}
@@ -426,7 +563,9 @@ export default function Settings() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Account Number</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Account Number
+                        </label>
                         <input
                           type="text"
                           value={bankAccountNumber}
@@ -435,7 +574,9 @@ export default function Settings() {
                         />
                       </div>
                       <div>
-                        <label className="block text-sm font-semibold text-gray-700 mb-2">Bank Name</label>
+                        <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          Bank Name
+                        </label>
                         <input
                           type="text"
                           value={bankName}
@@ -463,15 +604,23 @@ export default function Settings() {
           {activeTab === "security" && (
             <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 space-y-6">
               <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-4">Security Settings</h3>
-                <p className="text-sm text-gray-600 mb-6">Configure security and authentication settings</p>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">
+                  Security Settings
+                </h3>
+                <p className="text-sm text-gray-600 mb-6">
+                  Configure security and authentication settings
+                </p>
               </div>
 
               <div className="space-y-4">
                 <label className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
                   <div>
-                    <p className="font-medium text-gray-900">Two-Factor Authentication</p>
-                    <p className="text-sm text-gray-600">Add an extra layer of security to admin accounts</p>
+                    <p className="font-medium text-gray-900">
+                      Two-Factor Authentication
+                    </p>
+                    <p className="text-sm text-gray-600">
+                      Add an extra layer of security to admin accounts
+                    </p>
                   </div>
                   <label className="relative inline-flex items-center cursor-pointer">
                     <input
@@ -480,13 +629,15 @@ export default function Settings() {
                       onChange={(e) => setTwoFactorAuth(e.target.checked)}
                       className="sr-only peer"
                     />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
+                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-red-300 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-red-600"></div>
                   </label>
                 </label>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Session Timeout (minutes)</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Session Timeout (minutes)
+                    </label>
                     <input
                       type="number"
                       value={sessionTimeout}
@@ -495,11 +646,15 @@ export default function Settings() {
                       min="5"
                       max="120"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Auto logout after inactivity</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Auto logout after inactivity
+                    </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Max Login Attempts</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Max Login Attempts
+                    </label>
                     <input
                       type="number"
                       value={loginAttempts}
@@ -508,11 +663,15 @@ export default function Settings() {
                       min="3"
                       max="10"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Before account lockout</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Before account lockout
+                    </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-semibold text-gray-700 mb-2">Password Expiry (days)</label>
+                    <label className="block text-sm font-semibold text-gray-700 mb-2">
+                      Password Expiry (days)
+                    </label>
                     <input
                       type="number"
                       value={passwordExpiry}
@@ -521,34 +680,78 @@ export default function Settings() {
                       min="30"
                       max="365"
                     />
-                    <p className="text-xs text-gray-500 mt-1">Force password change interval</p>
+                    <p className="text-xs text-gray-500 mt-1">
+                      Force password change interval
+                    </p>
                   </div>
                 </div>
 
                 <div className="pt-6 border-t border-gray-200">
-                  <h4 className="font-semibold text-gray-900 mb-3">Password Requirements</h4>
+                  <h4 className="font-semibold text-gray-900 mb-3">
+                    Password Requirements
+                  </h4>
                   <div className="space-y-2 text-sm text-gray-600">
                     <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="w-4 h-4 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span>Minimum 8 characters</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="w-4 h-4 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span>At least one uppercase letter</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="w-4 h-4 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span>At least one number</span>
                     </div>
                     <div className="flex items-center gap-2">
-                      <svg className="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      <svg
+                        className="w-4 h-4 text-green-600"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M5 13l4 4L19 7"
+                        />
                       </svg>
                       <span>At least one special character</span>
                     </div>
