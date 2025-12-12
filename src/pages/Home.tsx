@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Navbar from "../components/common/Navbar";
 import Footer from "../components/common/Footer";
 import EventCard from "../components/common/EventCard";
+import { useEvents } from "../context/EventContext";
 
 interface CurrentUser {
   id: string;
@@ -17,6 +18,8 @@ export default function Home() {
   const location = useLocation();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState<CurrentUser | null>(null);
+  const { getActiveEvents } = useEvents();
+  const featuredEvents = getActiveEvents().slice(0, 3); // Get first 3 active events
 
   // Check login status on component mount and route changes
   useEffect(() => {
@@ -42,33 +45,6 @@ export default function Home() {
       window.removeEventListener("storage", checkLoginStatus);
     };
   }, [location]);
-
-  const featuredEvents = [
-    {
-      id: 1,
-      title: "Music Concert 2026",
-      date: "Jan 15, 2026",
-      location: "Kathmandu",
-      imageUrl:
-        "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=500",
-    },
-    {
-      id: 2,
-      title: "Tech Expo Nepal",
-      date: "Feb 20, 2026",
-      location: "Pokhara",
-      imageUrl:
-        "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=500",
-    },
-    {
-      id: 3,
-      title: "Startup Meetup",
-      date: "Mar 10, 2026",
-      location: "Lalitpur",
-      imageUrl:
-        "https://images.unsplash.com/photo-1511578314322-379afb476865?w=500",
-    },
-  ];
 
   return (
     <div className="bg-linear-to-b from-white to-gray-50 text-gray-800 min-h-screen">
@@ -250,7 +226,7 @@ export default function Home() {
                 title={event.title}
                 date={event.date}
                 location={event.location}
-                imageUrl={event.imageUrl}
+                imageUrl={event.image}
                 onViewDetails={() => navigate(`/events/${event.id}`)}
               />
             ))}
