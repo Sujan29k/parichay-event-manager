@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ShoppingBag, Ticket, DollarSign } from "lucide-react";
 import Navbar from "../../components/common/Navbar";
-import Footer from "../../components/common/Footer";
 
 interface Order {
   bookingId: string;
@@ -233,8 +232,6 @@ export default function OrderHistory() {
           )}
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }

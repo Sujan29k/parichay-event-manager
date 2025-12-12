@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Calendar, MapPin, Ticket, Download, CheckCircle } from "lucide-react";
+import { Calendar, MapPin, Ticket, Download, CheckCircle, Clock, QrCode, Share2, Mail } from "lucide-react";
 import Navbar from "../../components/common/Navbar";
-import Footer from "../../components/common/Footer";
 
 interface Booking {
   bookingId: string;
@@ -59,164 +58,288 @@ export default function MyTickets() {
 
   const tickets = activeTab === "active" ? activeTickets : pastTickets;
 
+  const handleDownloadTicket = (ticket: Booking) => {
+    // Simulate ticket download
+    alert(`Downloading ticket for ${ticket.title}\nBooking ID: ${ticket.bookingId}`);
+  };
+
+  const handleShareTicket = (ticket: Booking) => {
+    if (navigator.share) {
+      navigator.share({
+        title: ticket.title,
+        text: `Check out my ticket for ${ticket.title}!`,
+        url: window.location.href,
+      }).catch(() => {});
+    } else {
+      alert("Sharing not supported on this device");
+    }
+  };
+
+  const handleEmailTicket = (ticket: Booking) => {
+    window.location.href = `mailto:?subject=My Ticket for ${ticket.title}&body=Booking ID: ${ticket.bookingId}`;
+  };
+
   return (
-    <div className="min-h-screen bg-linear-to-b from-white to-gray-50">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-red-50">
       <Navbar />
 
       <div className="pt-24 pb-16 px-6">
-        <div className="max-w-5xl mx-auto">
+        <div className="max-w-6xl mx-auto">
           {/* Header */}
-          <div className="mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <div className="mb-8 text-center">
+            <div className="inline-flex items-center gap-2 bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
+              <Ticket className="w-4 h-4" />
+              Your Bookings
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-3">
               My Tickets
             </h1>
-            <p className="text-gray-600">View and manage your event tickets</p>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Manage your event tickets and bookings in one place
+            </p>
+          </div>
+
+          {/* Stats Cards */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="bg-gradient-to-br from-red-500 to-red-600 rounded-2xl shadow-lg p-6 text-white">
+              <div className="flex items-center justify-between mb-2">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                  <Ticket className="w-6 h-6" />
+                </div>
+                <span className="text-3xl font-bold">{activeTickets.length}</span>
+              </div>
+              <p className="text-red-100 text-sm">Active Tickets</p>
+            </div>
+            <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl shadow-lg p-6 text-white">
+              <div className="flex items-center justify-between mb-2">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                  <CheckCircle className="w-6 h-6" />
+                </div>
+                <span className="text-3xl font-bold">{pastTickets.length}</span>
+              </div>
+              <p className="text-blue-100 text-sm">Past Events</p>
+            </div>
+            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-2xl shadow-lg p-6 text-white">
+              <div className="flex items-center justify-between mb-2">
+                <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                  <Calendar className="w-6 h-6" />
+                </div>
+                <span className="text-3xl font-bold">{bookings.length}</span>
+              </div>
+              <p className="text-green-100 text-sm">Total Bookings</p>
+            </div>
           </div>
 
           {/* Tabs */}
-          <div className="flex gap-4 mb-6 border-b border-gray-200">
+          <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-2 mb-6 inline-flex gap-2">
             <button
               onClick={() => setActiveTab("active")}
-              className={`pb-3 px-4 font-semibold transition-all ${
+              className={`px-6 py-3 rounded-xl font-semibold transition-all ${
                 activeTab === "active"
-                  ? "text-red-600 border-b-2 border-red-600"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "bg-red-600 text-white shadow-md"
+                  : "text-gray-600 hover:bg-gray-50"
               }`}
             >
-              Active Tickets ({activeTickets.length})
+              Active ({activeTickets.length})
             </button>
             <button
               onClick={() => setActiveTab("past")}
-              className={`pb-3 px-4 font-semibold transition-all ${
+              className={`px-6 py-3 rounded-xl font-semibold transition-all ${
                 activeTab === "past"
-                  ? "text-red-600 border-b-2 border-red-600"
-                  : "text-gray-600 hover:text-gray-900"
+                  ? "bg-red-600 text-white shadow-md"
+                  : "text-gray-600 hover:bg-gray-50"
               }`}
             >
-              Past Events ({pastTickets.length})
+              Past ({pastTickets.length})
             </button>
           </div>
 
           {/* Tickets List */}
           {tickets.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow-md border border-gray-100 p-12 text-center">
-              <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Ticket className="w-10 h-10 text-gray-400" />
+            <div className="bg-white rounded-3xl shadow-xl border border-gray-100 p-16 text-center">
+              <div className="w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-200 rounded-full flex items-center justify-center mx-auto mb-6 shadow-inner">
+                <Ticket className="w-12 h-12 text-gray-400" />
               </div>
-              <h3 className="text-xl font-bold text-gray-900 mb-2">
+              <h3 className="text-2xl font-bold text-gray-900 mb-3">
                 No {activeTab === "active" ? "Active" : "Past"} Tickets
               </h3>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 mb-8 max-w-md mx-auto">
                 {activeTab === "active"
-                  ? "You don't have any upcoming events. Start exploring!"
-                  : "No past events found."}
+                  ? "You don't have any upcoming events. Discover amazing events happening near you!"
+                  : "No past events found in your booking history."}
               </p>
               <button
                 onClick={() => navigate("/events")}
-                className="px-6 py-3 bg-red-600 text-white rounded-xl hover:bg-red-700 transition"
+                className="px-8 py-4 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:from-red-700 hover:to-red-800 transition font-semibold shadow-lg hover:shadow-xl inline-flex items-center gap-2 group"
               >
                 Browse Events
+                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                </svg>
               </button>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="space-y-6">
               {tickets.map((ticket) => (
                 <div
                   key={ticket.bookingId}
-                  className="bg-white rounded-2xl shadow-md border border-gray-100 p-6 hover:shadow-lg transition"
+                  className="group bg-white rounded-3xl shadow-lg border border-gray-100 overflow-hidden hover:shadow-2xl transition-all duration-300"
                 >
-                  <div className="flex flex-col md:flex-row gap-6">
-                    {/* Event Image */}
+                  <div className="grid lg:grid-cols-2 gap-0">
+                    {/* Left Section: Event Details + QR Code */}
+                    <div className="flex flex-col">
+                      {/* Event Details */}
+                      <div className="flex-1 p-8">
+                        {/* Status Badge */}
+                        <div className="flex items-center justify-between mb-4">
+                          <div className="bg-green-100 px-4 py-2 rounded-xl inline-flex items-center gap-2">
+                            <CheckCircle className="w-5 h-5 text-green-600" />
+                            <span className="text-sm font-bold text-green-700">Confirmed</span>
+                          </div>
+                          {activeTab === "active" && (
+                            <div className="bg-red-100 text-red-700 px-4 py-2 rounded-xl inline-flex items-center gap-2">
+                              <Clock className="w-4 h-4" />
+                              <span className="text-sm font-semibold">Upcoming</span>
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-red-600 transition-colors">
+                          {ticket.title}
+                        </h3>
+
+                        {/* Event Info */}
+                        <div className="space-y-3 mb-6">
+                          <div className="flex items-center gap-3 text-gray-600">
+                            <div className="w-10 h-10 bg-red-50 rounded-xl flex items-center justify-center shrink-0">
+                              <Calendar className="w-5 h-5 text-red-600" />
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-medium">Event Date</p>
+                              <p className="font-semibold text-gray-900">{ticket.date}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-3 text-gray-600">
+                            <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center shrink-0">
+                              <MapPin className="w-5 h-5 text-blue-600" />
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-medium">Location</p>
+                              <p className="font-semibold text-gray-900">{ticket.location}</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Booking Details Grid */}
+                        <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-2xl p-5">
+                          <h4 className="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
+                            <div className="w-1 h-4 bg-red-600 rounded-full"></div>
+                            Booking Details
+                          </h4>
+                          <div className="grid grid-cols-2 gap-4">
+                            <div>
+                              <p className="text-xs text-gray-500 font-medium mb-1">Booking ID</p>
+                              <p className="font-bold text-gray-900 text-sm break-all">
+                                #{ticket.bookingId}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-medium mb-1">Tickets</p>
+                              <p className="font-bold text-gray-900 text-sm flex items-center gap-1">
+                                <Ticket className="w-4 h-4 text-red-600" />
+                                {ticket.quantity}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-medium mb-1">Total Paid</p>
+                              <p className="font-bold text-green-600 text-sm">
+                                ₹{ticket.totalAmount?.toFixed(2)}
+                              </p>
+                            </div>
+                            <div>
+                              <p className="text-xs text-gray-500 font-medium mb-1">Payment</p>
+                              <p className="font-bold text-gray-900 text-sm break-words">
+                                {ticket.paymentMethod === "wallet" ||
+                                ticket.paymentMethod === "upi"
+                                  ? ticket.walletType === "esewa"
+                                    ? "eSewa"
+                                    : ticket.walletType === "khalti"
+                                    ? "Khalti"
+                                    : "Wallet"
+                                  : ticket.paymentMethod === "card"
+                                  ? "Card"
+                                  : ticket.paymentMethod === "netbanking"
+                                  ? "NetBanking"
+                                  : ticket.paymentMethod}
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Action Buttons */}
+                        <div className="grid grid-cols-2 gap-3 mt-6">
+                          <button
+                            onClick={() => handleDownloadTicket(ticket)}
+                            className="flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-red-600 to-red-700 text-white rounded-xl hover:from-red-700 hover:to-red-800 transition-all shadow-md hover:shadow-lg font-semibold group"
+                          >
+                            <Download className="w-4 h-4 group-hover:animate-bounce" />
+                            <span className="text-sm">Download</span>
+                          </button>
+                          <button
+                            onClick={() => navigate(`/events/${ticket.id}`)}
+                            className="flex items-center justify-center gap-2 px-4 py-3 border-2 border-gray-300 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-gray-400 transition-all font-semibold"
+                          >
+                            <span className="text-sm">View Event</span>
+                          </button>
+                          <button
+                            onClick={() => handleShareTicket(ticket)}
+                            className="flex items-center justify-center gap-2 px-4 py-3 bg-blue-50 text-blue-700 rounded-xl hover:bg-blue-100 transition-all font-semibold"
+                          >
+                            <Share2 className="w-4 h-4" />
+                            <span className="text-sm">Share</span>
+                          </button>
+                          <button
+                            onClick={() => handleEmailTicket(ticket)}
+                            className="flex items-center justify-center gap-2 px-4 py-3 bg-green-50 text-green-700 rounded-xl hover:bg-green-100 transition-all font-semibold"
+                          >
+                            <Mail className="w-4 h-4" />
+                            <span className="text-sm">Email</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* QR Code Section at Bottom Left */}
+                      <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-6 border-t border-gray-200">
+                        <div className="flex items-center gap-4">
+                          <div className="bg-white p-3 rounded-xl shadow-md">
+                            <div className="w-20 h-20 bg-gradient-to-br from-gray-200 to-gray-300 rounded-lg flex items-center justify-center">
+                              <QrCode className="w-10 h-10 text-gray-600" />
+                            </div>
+                          </div>
+                          <div>
+                            <p className="text-sm font-bold text-gray-900 mb-1">
+                              Scan at Venue
+                            </p>
+                            <p className="text-xs text-gray-500">
+                              Show this QR code for entry verification
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Right Section: Event Image */}
                     {ticket.imageUrl && (
-                      <div className="md:w-48 h-32 rounded-xl overflow-hidden bg-gray-100 shrink-0">
+                      <div className="relative h-64 lg:h-full overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
                         <img
                           src={ticket.imageUrl}
                           alt={ticket.title}
-                          className="w-full h-full object-cover"
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                         />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent"></div>
                       </div>
                     )}
-
-                    {/* Ticket Details */}
-                    <div className="flex-1">
-                      <div className="flex items-start justify-between mb-3">
-                        <div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-2">
-                            {ticket.title}
-                          </h3>
-                          <div className="flex items-center gap-2 text-gray-600 mb-1">
-                            <Calendar size={16} className="text-red-600" />
-                            <span className="text-sm">{ticket.date}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-gray-600">
-                            <MapPin size={16} className="text-red-600" />
-                            <span className="text-sm">{ticket.location}</span>
-                          </div>
-                        </div>
-                        <div className="flex items-center gap-2 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
-                          <CheckCircle size={16} />
-                          Confirmed
-                        </div>
-                      </div>
-
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 pt-4 border-t">
-                        <div>
-                          <p className="text-xs text-gray-500">Booking ID</p>
-                          <p className="font-semibold text-sm">
-                            {ticket.bookingId}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500">Tickets</p>
-                          <p className="font-semibold text-sm">
-                            {ticket.quantity}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500">Total Paid</p>
-                          <p className="font-semibold text-sm">
-                            ₹{ticket.totalAmount?.toFixed(2)}
-                          </p>
-                        </div>
-                        <div>
-                          <p className="text-xs text-gray-500">Payment</p>
-                          <p className="font-semibold text-sm">
-                            {ticket.paymentMethod === "wallet" ||
-                            ticket.paymentMethod === "upi"
-                              ? ticket.walletType === "esewa"
-                                ? "eSewa"
-                                : ticket.walletType === "khalti"
-                                ? "Khalti"
-                                : "Digital Wallet"
-                              : ticket.paymentMethod === "card"
-                              ? "Card"
-                              : ticket.paymentMethod === "netbanking"
-                              ? `Net Banking${
-                                  ticket.bankName ? ` (${ticket.bankName})` : ""
-                                }`
-                              : ticket.paymentMethod}
-                          </p>
-                        </div>
-                      </div>
-
-                      <div className="flex gap-3 mt-4">
-                        <button
-                          onClick={() =>
-                            alert("Download functionality coming soon!")
-                          }
-                          className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition text-sm"
-                        >
-                          <Download size={16} />
-                          Download Ticket
-                        </button>
-                        <button
-                          onClick={() => navigate(`/events/${ticket.id}`)}
-                          className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition text-sm"
-                        >
-                          View Event
-                        </button>
-                      </div>
-                    </div>
                   </div>
                 </div>
               ))}
@@ -224,8 +347,6 @@ export default function MyTickets() {
           )}
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }

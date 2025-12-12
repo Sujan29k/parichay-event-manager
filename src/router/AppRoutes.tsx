@@ -10,8 +10,7 @@ import Register from "../pages/user/Register";
 import MyTickets from "../pages/user/MyTickets";
 import OrderHistory from "../pages/user/OrderHistory";
 import Profile from "../pages/user/Profile";
-import FAQ from "../pages/support/FAQ";
-import Contact from "../pages/support/Contact";
+import HelpSupport from "../pages/support/HelpSupport";
 import UserLayout from "../layouts/UserLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -55,8 +54,11 @@ const AppRoutes = () => {
           <Route path="/admin/settings" element={<Settings />} />
         </Route>
 
-        <Route path="/faq" element={<FAQ />} />
-        <Route path="/contact" element={<Contact />} />
+        {/* Help & Support */}
+        <Route path="/help" element={<HelpSupport />} />
+        <Route path="/support" element={<HelpSupport />} />
+        <Route path="/faq" element={<HelpSupport />} />
+        <Route path="/contact" element={<HelpSupport />} />
 
         <Route
           path="*"

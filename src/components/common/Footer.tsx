@@ -28,40 +28,61 @@ export default function Footer() {
 
       {/* Newsletter Section */}
       <div className="relative border-b border-slate-700/50">
-        <div className="max-w-7xl mx-auto px-6 py-12">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8 bg-gradient-to-r from-red-600/20 to-red-500/10 backdrop-blur-sm rounded-2xl p-8 border border-red-500/20">
-            <div className="flex-1 text-center md:text-left">
-              <div className="flex items-center justify-center md:justify-start gap-3 mb-3">
-                <div className="w-12 h-12 bg-gradient-to-br from-red-500 to-red-600 rounded-full flex items-center justify-center">
-                  <HiMail className="text-white text-2xl" />
-                </div>
-                <h3 className="text-2xl font-bold text-white">Stay Updated</h3>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-12">
+          <div className="grid md:grid-cols-2 gap-6 sm:gap-8 bg-gradient-to-br from-slate-800/50 to-slate-900/50 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-10 border border-slate-700/50 shadow-2xl">
+            <div className="space-y-3 sm:space-y-4">
+              <div className="inline-flex items-center gap-2 bg-red-600/20 text-red-400 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium border border-red-500/30">
+                <HiMail className="text-base sm:text-lg" />
+                Newsletter
               </div>
-              <p className="text-gray-400">
-                Subscribe to get updates on the latest events and exclusive
-                offers!
+              <h3 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white leading-tight">
+                Never Miss an Event
+              </h3>
+              <p className="text-gray-400 text-base sm:text-lg leading-relaxed">
+                Get the latest updates on trending events, exclusive offers, and early bird discounts delivered to your inbox.
               </p>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-6 pt-2 sm:pt-4">
+                <div className="flex items-center gap-2 text-gray-300">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-xs sm:text-sm">Weekly updates</span>
+                </div>
+                <div className="flex items-center gap-2 text-gray-300">
+                  <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  <span className="text-xs sm:text-sm">No spam</span>
+                </div>
+              </div>
             </div>
-            <form
-              onSubmit={handleSubscribe}
-              className="flex gap-3 w-full md:w-auto md:min-w-[400px]"
-            >
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                className="flex-1 px-6 py-3 bg-slate-800/50 border border-slate-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-2 focus:ring-red-500/20 transition-all"
-                required
-              />
-              <button
-                type="submit"
-                className="px-6 py-3 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-105 flex items-center gap-2 shadow-lg shadow-red-500/30"
+            <div className="flex items-center mt-4 md:mt-0">
+              <form
+                onSubmit={handleSubscribe}
+                className="w-full space-y-3 sm:space-y-4"
               >
-                Subscribe
-                <MdArrowForward />
-              </button>
-            </form>
+                <div className="relative">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter your email address"
+                    className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-slate-900/80 border-2 border-slate-600 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-red-500 focus:ring-4 focus:ring-red-500/20 transition-all text-base sm:text-lg"
+                    required
+                  />
+                </div>
+                <button
+                  type="submit"
+                  className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white font-semibold rounded-xl transition-all duration-300 transform hover:scale-[1.02] flex items-center justify-center gap-2 shadow-lg shadow-red-500/30 hover:shadow-red-500/50 text-base sm:text-lg"
+                >
+                  Subscribe Now
+                  <MdArrowForward className="text-lg sm:text-xl" />
+                </button>
+                <p className="text-xs text-gray-500 text-center px-2">
+                  By subscribing, you agree to receive promotional emails. Unsubscribe anytime.
+                </p>
+              </form>
+            </div>
           </div>
         </div>
       </div>

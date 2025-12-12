@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Calendar, MapPin, Clock, Users, Tag, ArrowLeft, Minus, Plus } from "lucide-react";
 import Navbar from "../components/common/Navbar";
-import Footer from "../components/common/Footer";
 
 // Event data - in a real app, this would come from an API
 const eventsData = [
@@ -380,8 +379,6 @@ export default function SingleEvent() {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }
