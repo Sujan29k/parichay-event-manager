@@ -37,7 +37,7 @@ export default function Navbar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm">
-      <div className="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
+      <div className="w-full flex items-center justify-between px-8 py-5">
         {/* Logo Section */}
         <div
           className="flex items-center gap-3 cursor-pointer"
@@ -311,7 +311,7 @@ export default function Navbar() {
                   </p>
                   <p className="text-xs text-gray-500">{currentUser?.email}</p>
                 </div>
-                
+
                 {/* Admin Panel Button - Mobile */}
                 {currentUser?.role === "admin" && (
                   <button
@@ -343,7 +343,7 @@ export default function Navbar() {
                     Admin Panel
                   </button>
                 )}
-                
+
                 <button
                   onClick={() => {
                     navigate("/my-tickets");
