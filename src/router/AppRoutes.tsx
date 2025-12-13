@@ -11,6 +11,9 @@ import MyTickets from "../pages/user/MyTickets";
 import OrderHistory from "../pages/user/OrderHistory";
 import Profile from "../pages/user/Profile";
 import HelpSupport from "../pages/support/HelpSupport";
+import FAQ from "../pages/support/FAQ";
+import Contact from "../pages/support/Contact";
+import TermsConditions from "../pages/support/TermsConditions";
 import UserLayout from "../layouts/UserLayout";
 import AdminLayout from "../layouts/AdminLayout";
 import Dashboard from "../pages/admin/Dashboard";
@@ -57,8 +60,10 @@ const AppRoutes = () => {
         {/* Help & Support */}
         <Route path="/help" element={<HelpSupport />} />
         <Route path="/support" element={<HelpSupport />} />
-        <Route path="/faq" element={<HelpSupport />} />
-        <Route path="/contact" element={<HelpSupport />} />
+        <Route path="/faq" element={<FAQ />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/terms" element={<TermsConditions />} />
+        <Route path="/about" element={<HelpSupport />} />
 
         <Route
           path="*"

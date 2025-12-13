@@ -159,11 +159,11 @@ export default function Footer() {
             Support
           </h3>
           <ul className="space-y-3">
-            <FooterLink>Help Center</FooterLink>
-            <FooterLink>Privacy Policy</FooterLink>
-            <FooterLink>Terms & Conditions</FooterLink>
-            <FooterLink>Refund Policy</FooterLink>
-            <FooterLink>About Us</FooterLink>
+            <FooterLink onClick={() => navigate("/help")}>Help Center</FooterLink>
+            <FooterLink onClick={() => navigate("/terms")}>Terms & Conditions</FooterLink>
+            <FooterLink onClick={() => navigate("/contact")}>Contact Us</FooterLink>
+            <FooterLink onClick={() => navigate("/faq")}>FAQ</FooterLink>
+            <FooterLink onClick={() => navigate("/about")}>About Us</FooterLink>
           </ul>
         </div>
 
